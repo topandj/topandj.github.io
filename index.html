@@ -47,6 +47,26 @@
         #cv-pages::-webkit-scrollbar {
             display: none;
         }
+        @media (max-width: 1023px) {
+            #cv-pages {
+                scrollbar-width: thin;
+                scrollbar-color: rgb(75 85 99) transparent;
+            }
+            #cv-pages::-webkit-scrollbar {
+                display: block;
+                width: 8px;
+            }
+            #cv-pages::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            #cv-pages::-webkit-scrollbar-thumb {
+                background: rgb(75 85 99);
+                border-radius: 4px;
+            }
+            #cv-pages::-webkit-scrollbar-thumb:hover {
+                background: rgb(107 114 128);
+            }
+        }
         .cv-page {
             scrollbar-width: none;
             flex: 0 0 100%;
@@ -64,7 +84,8 @@
         .cv-page::-webkit-scrollbar {
             display: none;
         }
-        #page-experience {
+        #page-experience,
+        #page-technologies {
             justify-content: flex-start;
         }
 .cv-page .page-content {
@@ -190,6 +211,109 @@
 #page-beyond-work.beyond-work-cursor-active {
     cursor: none;
 }
+@media (max-width: 1023px) {
+    #beyond-work-cursor {
+        display: none !important;
+    }
+    #page-beyond-work.beyond-work-cursor-active {
+        cursor: auto;
+    }
+}
+
+/* Mobile/tablet: horizontal photos panel (tap trigger to open, scroll = left-to-right flow) */
+@media (max-width: 1023px) {
+    /* Force vertical (desktop) photo panel to never show on mobile/tablet */
+    #photos-panel,
+    #photos-panel.photos-panel-visible {
+        display: none !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        opacity: 0 !important;
+    }
+
+    #photos-panel-mobile {
+        display: none;
+        position: relative;
+        width: 100vw;
+        max-width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-top: 1rem;
+        padding: 0.5rem 0;
+        overflow: hidden;
+        box-sizing: border-box;
+        background: rgb(31 41 55); /* match #cv-pages parent (bg-gray-800) */
+    }
+    #photos-panel-mobile.photos-panel-mobile-visible {
+        display: block;
+    }
+    #photos-panel-mobile .photos-panel-mobile-close {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.75rem;
+        z-index: 5;
+        width: 2rem;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(55, 65, 81, 0.8);
+        border: 1px solid rgba(75, 85, 99, 0.8);
+        border-radius: 0.375rem;
+        color: rgb(209 213 219);
+        font-size: 1.25rem;
+        line-height: 1;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+    }
+    #photos-panel-mobile .photos-panel-mobile-close:hover {
+        background: rgba(75, 85, 99, 0.9);
+        color: rgb(243 244 246);
+    }
+    .photos-panel-mobile-strip-wrap {
+        position: relative;
+        width: 100%;
+        height: 12rem;
+        overflow: hidden;
+    }
+    .photos-panel-mobile-strip {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        height: 100%;
+        will-change: transform;
+        padding: 0 0.5rem;
+    }
+    .photos-panel-mobile-strip img {
+        flex: 0 0 auto;
+        width: auto;
+        height: 100%;
+        min-width: 8rem;
+        max-width: 10rem;
+        object-fit: cover;
+        border-radius: 0.5rem;
+    }
+    #photos-panel-mobile [data-mobile-strip] {
+        display: none;
+    }
+    #photos-panel-mobile [data-mobile-strip].photos-panel-mobile-strip-active {
+        display: block;
+    }
+
+    /* When mobile photos panel is visible, pin Beyond Work heading + list in the same place (top/left/width set by JS); no extra padding so text/margins match before state */
+    body.mobile-photos-open #page-beyond-work .beyond-work-header {
+        position: fixed;
+        z-index: 25;
+        background: rgb(31 41 55);
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+}
+@media (min-width: 1024px) {
+    #photos-panel-mobile {
+        display: none !important;
+    }
+}
 </style>
 </head>
 <body class="bg-gray-900 text-gray-100 overflow-x-hidden">
@@ -206,6 +330,8 @@
             <li><a href="#beyond-work" class="cv-nav-link block py-2 relative pr-1 transition-colors hover:text-gray-300" data-section="beyond-work">Beyond Work</a></li>
         </ul>
     </nav>
+
+    <div id="beyond-work-cursor" aria-hidden="true"><span id="beyond-work-cursor-text">point the item</span></div>
 
     <div id="cv-wrapper" class="flex relative max-w-6xl mx-auto lg:mr-48 h-screen overflow-hidden">
         <!-- Left column: images (outside #cv-pages), visible only on hover over "Nature and wildlife" -->
@@ -399,13 +525,50 @@
             <div id="page-beyond-work" class="cv-page" data-page="beyond-work">
                 <div class="page-content mx-auto px-6 md:px-10">
             <section id="beyond-work" class="print-break">
-                <p class="text-xs uppercase tracking-[0.15em] font-medium text-emerald-400/90 mb-5 pb-2 border-b border-gray-700/70">Beyond Work</p>
-                <ul class="list-disc list-inside text-gray-300 space-y-2 ml-4 leading-relaxed">
-                    <li><span id="nature-wildlife-trigger" class="cursor-default rounded px-0.5 hover:text-emerald-400/90 transition-colors">Nature and wildlife</span></li>
-                    <li><span id="travel-tso-trigger" class="cursor-default rounded px-0.5 hover:text-emerald-400/90 transition-colors">Travel, sports and outdoor activities</span></li>
-                    <li><span id="nina-djina-trigger" class="cursor-default rounded px-0.5 hover:text-emerald-400/90 transition-colors">Sharing everyday life with my dogs Nina &amp; Djina</span></li>
-                </ul>
+                <div class="beyond-work-header">
+                    <p class="text-xs uppercase tracking-[0.15em] font-medium text-emerald-400/90 mb-5 pb-2 border-b border-gray-700/70">Beyond Work</p>
+                    <ul class="experience-role-list">
+                        <li><span id="nature-wildlife-trigger" class="cursor-default rounded px-0.5 hover:text-emerald-400/90 transition-colors active:text-emerald-400/90">Nature and wildlife</span></li>
+                        <li><span id="travel-tso-trigger" class="cursor-default rounded px-0.5 hover:text-emerald-400/90 transition-colors active:text-emerald-400/90">Travel, sports and outdoor activities</span></li>
+                        <li><span id="nina-djina-trigger" class="cursor-default rounded px-0.5 hover:text-emerald-400/90 transition-colors active:text-emerald-400/90">Sharing everyday life with my dogs Nina &amp; Djina</span></li>
+                    </ul>
+                </div>
             </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile/tablet: horizontal photos panel (tap trigger to open; scroll = left-to-right), positioned before footer -->
+        <div id="photos-panel-mobile" class="photos-panel-mobile" aria-hidden="true">
+            <button type="button" class="photos-panel-mobile-close" aria-label="Close photos">×</button>
+            <div data-mobile-strip="photos-strip-nature" id="photos-mobile-strip-nature" class="photos-panel-mobile-strip-wrap">
+                <div class="photos-panel-mobile-strip photos-panel-mobile-strip-animate">
+                    <img src="img/Kenya.JPG" alt="Kenya" />
+                    <img src="img/Kenya2.JPG" alt="Kenya 2" />
+                    <img src="img/Kenya3.jpeg" alt="Kenya 3" />
+                    <img src="img/Kenya.JPG" alt="" aria-hidden="true" />
+                    <img src="img/Kenya2.JPG" alt="" aria-hidden="true" />
+                    <img src="img/Kenya3.jpeg" alt="" aria-hidden="true" />
+                </div>
+            </div>
+            <div data-mobile-strip="photos-strip-dogs" id="photos-mobile-strip-dogs" class="photos-panel-mobile-strip-wrap">
+                <div class="photos-panel-mobile-strip photos-panel-mobile-strip-animate">
+                    <img src="img/NinaDjina.jpeg" alt="Nina &amp; Djina" />
+                    <img src="img/NinaDjina2.jpeg" alt="Nina &amp; Djina 2" />
+                    <img src="img/NinaDjina3.jpeg" alt="Nina &amp; Djina 3" />
+                    <img src="img/NinaDjina.jpeg" alt="" aria-hidden="true" />
+                    <img src="img/NinaDjina2.jpeg" alt="" aria-hidden="true" />
+                    <img src="img/NinaDjina3.jpeg" alt="" aria-hidden="true" />
+                </div>
+            </div>
+            <div data-mobile-strip="photos-strip-travel" id="photos-mobile-strip-travel" class="photos-panel-mobile-strip-wrap">
+                <div class="photos-panel-mobile-strip photos-panel-mobile-strip-animate">
+                    <img src="img/tso.JPG" alt="Travel, sports and outdoor" />
+                    <img src="img/tso3.jpeg" alt="" />
+                    <img src="img/tso2.jpeg" alt="" />
+                    <img src="img/tso.JPG" alt="" aria-hidden="true" />
+                    <img src="img/tso3.jpeg" alt="" aria-hidden="true" />
+                    <img src="img/tso2.jpeg" alt="" aria-hidden="true" />
                 </div>
             </div>
         </div>
@@ -550,6 +713,97 @@
             window.addEventListener("hashchange", hideIfNotBeyondWork);
         })();
 
+        // Mobile/tablet: tap trigger to show horizontal photos; scroll = left-to-right
+        (function () {
+            var mobilePanel = document.getElementById("photos-panel-mobile");
+            var mobileCloseBtn = mobilePanel && mobilePanel.querySelector(".photos-panel-mobile-close");
+            var mobileStripWraps = mobilePanel ? mobilePanel.querySelectorAll("[data-mobile-strip]") : [];
+            var mq = typeof window.matchMedia !== "undefined" && window.matchMedia("(max-width: 1023px)");
+
+            function isMobile() { return mq && mq.matches; }
+
+            function showMobilePanelForStrip(stripId) {
+                if (!mobilePanel || !isMobile()) return;
+                var header = document.querySelector("#page-beyond-work .beyond-work-header");
+                var section = document.getElementById("beyond-work");
+                if (header) {
+                    var rect = header.getBoundingClientRect();
+                    document.body.classList.add("mobile-photos-open");
+                    header.style.top = rect.top + "px";
+                    header.style.left = rect.left + "px";
+                    header.style.width = rect.width + "px";
+                    if (section) section.style.paddingTop = rect.height + "px";
+                }
+                mobileStripWraps.forEach(function (wrap) {
+                    wrap.classList.toggle("photos-panel-mobile-strip-active", wrap.getAttribute("data-mobile-strip") === stripId);
+                });
+                mobilePanel.classList.add("photos-panel-mobile-visible");
+                mobilePanel.setAttribute("aria-hidden", "false");
+            }
+
+            function hideMobilePanel() {
+                if (!mobilePanel) return;
+                mobilePanel.classList.remove("photos-panel-mobile-visible");
+                mobilePanel.setAttribute("aria-hidden", "true");
+                document.body.classList.remove("mobile-photos-open");
+                var header = document.querySelector("#page-beyond-work .beyond-work-header");
+                var section = document.getElementById("beyond-work");
+                if (header) {
+                    header.style.top = "";
+                    header.style.left = "";
+                    header.style.width = "";
+                }
+                if (section) section.style.paddingTop = "";
+            }
+
+            PHOTO_ITEMS.forEach(function (item) {
+                var trigger = document.getElementById(item.triggerId);
+                if (!trigger) return;
+                trigger.addEventListener("click", function (e) {
+                    if (!isMobile()) return;
+                    e.preventDefault();
+                    if (getCurrentPageId() !== "beyond-work") scrollToPage("beyond-work");
+                    showMobilePanelForStrip(item.stripId);
+                });
+            });
+
+            if (mobileCloseBtn) mobileCloseBtn.addEventListener("click", hideMobilePanel);
+
+            function hidePanelIfLeftBeyondWork() {
+                if (isMobile() && getCurrentPageId() !== "beyond-work") hideMobilePanel();
+            }
+            if (scrollEl) {
+                scrollEl.addEventListener("scroll", hidePanelIfLeftBeyondWork, { passive: true });
+                if ("onscrollend" in window) scrollEl.addEventListener("scrollend", hidePanelIfLeftBeyondWork);
+            }
+            window.addEventListener("hashchange", hidePanelIfLeftBeyondWork);
+        })();
+
+        // Horizontal strip animation (mobile): pictures move left to right
+        (function () {
+            var mobileStrips = document.querySelectorAll(".photos-panel-mobile-strip.photos-panel-mobile-strip-animate");
+            var stateMap = new WeakMap();
+            var speed = 40;
+            var then = 0;
+
+            function animate(now) {
+                requestAnimationFrame(animate);
+                var delta = then ? Math.min(now - then, 100) : 0;
+                then = now;
+                mobileStrips.forEach(function (strip) {
+                    var w = strip.scrollWidth;
+                    if (!w) return;
+                    var half = w / 2;
+                    var state = stateMap.get(strip) || { offset: 0 };
+                    stateMap.set(strip, state);
+                    state.offset = state.offset + (speed * delta) / 1000;
+                    if (state.offset >= half) state.offset -= half;
+                    if (strip instanceof HTMLElement) strip.style.transform = "translateX(-" + state.offset + "px)";
+                });
+            }
+            requestAnimationFrame(animate);
+        })();
+
         // Seamless circular scroll: JS-driven so reset has no gap
         (function () {
             var strips = document.querySelectorAll(".photos-panel-strip");
@@ -577,7 +831,7 @@
             requestAnimationFrame(animate);
         })();
 
-        // Beyond Work page: interactive cursor with "hover over" text (hidden when hovering triggers)
+        // Beyond Work page: interactive cursor with "hover over" text (hidden when hovering triggers); disabled on mobile/tablet
         (function () {
             var cursorEl = document.getElementById("beyond-work-cursor");
             var cursorText = document.getElementById("beyond-work-cursor-text");
@@ -586,9 +840,13 @@
             var triggers = PHOTO_ITEMS.map(function (item) { return document.getElementById(item.triggerId); }).filter(Boolean);
             var lastMouseX = -1;
             var lastMouseY = -1;
+            var cursorMq = typeof window.matchMedia !== "undefined" && window.matchMedia("(max-width: 1023px)");
 
             function isBeyondWork() {
                 return getCurrentPageId() === "beyond-work";
+            }
+            function isCursorDisabled() {
+                return cursorMq && cursorMq.matches;
             }
 
             function isInsideCvPages(clientX, clientY) {
@@ -613,6 +871,11 @@
 
             function updateCursorVisibility() {
                 if (!cursorEl || !beyondWorkPage) return;
+                if (isCursorDisabled()) {
+                    cursorEl.classList.remove("visible");
+                    beyondWorkPage.classList.remove("beyond-work-cursor-active");
+                    return;
+                }
                 if (!isBeyondWork()) {
                     cursorEl.classList.remove("visible");
                     beyondWorkPage.classList.remove("beyond-work-cursor-active");
@@ -636,6 +899,7 @@
                 lastMouseX = e.clientX;
                 lastMouseY = e.clientY;
                 if (!cursorEl || !beyondWorkPage) return;
+                if (isCursorDisabled()) return;
                 if (isBeyondWork() && isInsideCvPages(e.clientX, e.clientY)) {
                     cursorEl.style.left = e.clientX + "px";
                     cursorEl.style.top = e.clientY + "px";
@@ -721,7 +985,7 @@
 
         return React.createElement("div", { className: "space-y-8" },
             React.createElement("input", {
-                className: "w-full max-w-xs px-3 py-2 rounded-lg bg-gray-700/40 border border-gray-600 text-gray-100 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 focus:border-emerald-500/50",
+                className: "w-full min-w-0 px-3 py-2 rounded-lg bg-gray-700/40 border border-gray-600 text-gray-100 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-emerald-500/50 focus:border-emerald-500/50",
                 placeholder: "Search technologies…",
                 value: q,
                 onChange: (e) => setQ(e.target.value),
