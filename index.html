@@ -530,7 +530,7 @@
                     <ul class="experience-role-list">
                         <li><span id="nature-wildlife-trigger" class="cursor-default rounded px-0.5 hover:text-emerald-400/90 transition-colors active:text-emerald-400/90">Nature and wildlife</span></li>
                         <li><span id="travel-tso-trigger" class="cursor-default rounded px-0.5 hover:text-emerald-400/90 transition-colors active:text-emerald-400/90">Travel, sports and outdoor activities</span></li>
-                        <li><span id="nina-djina-trigger" class="cursor-default rounded px-0.5 hover:text-emerald-400/90 transition-colors active:text-emerald-400/90">Sharing everyday life with my dogs Nina &amp; Djina</span></li>
+                        <li><span id="nina-djina-trigger" class="cursor-default rounded px-0.5 hover:text-emerald-400/90 transition-colors active:text-emerald-400/90">Sharing everyday life with my dogs Nina &amp; Ðina</span></li>
                     </ul>
                 </div>
             </section>
@@ -724,6 +724,7 @@
 
             function showMobilePanelForStrip(stripId) {
                 if (!mobilePanel || !isMobile()) return;
+                /** @type {HTMLElement | null} */
                 var header = document.querySelector("#page-beyond-work .beyond-work-header");
                 var section = document.getElementById("beyond-work");
                 if (header) {
@@ -746,6 +747,7 @@
                 mobilePanel.classList.remove("photos-panel-mobile-visible");
                 mobilePanel.setAttribute("aria-hidden", "true");
                 document.body.classList.remove("mobile-photos-open");
+                /** @type {HTMLElement | null} */
                 var header = document.querySelector("#page-beyond-work .beyond-work-header");
                 var section = document.getElementById("beyond-work");
                 if (header) {
