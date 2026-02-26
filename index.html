@@ -19,6 +19,9 @@
         }
         @media print {
             #cv-nav { display: none !important; }
+            #mobile-nav-hamburger { display: none !important; }
+            #mobile-drawer-overlay { display: none !important; }
+            #mobile-nav-drawer { display: none !important; }
             aside { display: none !important; }
         }
         #cv-nav a.active {
@@ -34,6 +37,105 @@
             height: 60%;
             background: rgb(16 185 129);
             border-radius: 2px;
+        }
+
+        /* Mobile hamburger + slide-in drawer (lighter colors to match app) */
+        #mobile-nav-hamburger {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 50;
+            width: 2.75rem;
+            height: 2.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgb(55 65 81);
+            border: 1px solid rgb(75 85 99);
+            border-radius: 0.5rem;
+            color: rgb(243 244 246);
+            transition: background 0.2s, border-color 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        #mobile-nav-hamburger:hover {
+            background: rgb(75 85 99);
+            border-color: rgb(107 114 128);
+        }
+        #mobile-nav-hamburger svg { width: 1.25rem; height: 1.25rem; }
+        @media (min-width: 1024px) {
+            #mobile-nav-hamburger { display: none !important; }
+        }
+
+        #mobile-drawer-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 45;
+            background: rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+        #mobile-drawer-overlay.mobile-drawer-open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        @media (min-width: 1024px) {
+            #mobile-drawer-overlay { display: none !important; }
+        }
+
+        #mobile-nav-drawer {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width:  min(85vw, 20rem);
+            max-width: 20rem;
+            z-index: 50;
+            background: rgba(31, 41, 55, 0.85);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transform: translateX(-100%);
+            transition: transform 0.25s ease;
+            overflow-y: auto;
+        }
+        #mobile-nav-drawer.mobile-drawer-open {
+            transform: translateX(0);
+        }
+        @media (min-width: 1024px) {
+            #mobile-nav-drawer { display: none !important; }
+        }
+
+        #mobile-nav-drawer .mobile-drawer-nav {
+            padding: 1rem 1rem 1.5rem;
+        }
+        #mobile-nav-drawer .cv-nav-link {
+            display: block;
+            padding: 0.75rem 0.875rem 0.75rem 1rem;
+            border-radius: 0.375rem;
+            color: rgb(209 213 219);
+            font-size: 0.9375rem;
+            transition: color 0.2s, background 0.2s;
+            position: relative;
+        }
+        #mobile-nav-drawer .cv-nav-link:hover {
+            color: rgb(243 244 246);
+            background: rgba(75, 85, 99, 0.4);
+        }
+        #mobile-nav-drawer .cv-nav-link.active {
+            color: rgb(243 244 246);
+            background: rgba(16, 185, 129, 0.12);
+        }
+        #mobile-nav-drawer .cv-nav-link.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 60%;
+            background: rgb(16 185 129);
+            border-radius: 0 2px 2px 0;
         }
 
         /* Stacked sections: each section one viewport, content from top, long sections scroll inside */
@@ -318,7 +420,29 @@
 </head>
 <body class="bg-gray-900 text-gray-100 overflow-x-hidden">
     <div id="beyond-work-cursor" aria-hidden="true"><span id="beyond-work-cursor-text">point the item</span></div>
-    <!-- Right-side section menu -->
+
+    <!-- Mobile: hamburger button (visible only below lg) -->
+    <button id="mobile-nav-hamburger" type="button" class="lg:hidden print:hidden" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav-drawer">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+
+    <!-- Mobile: overlay (tap to close drawer) -->
+    <div id="mobile-drawer-overlay" class="mobile-drawer-overlay" aria-hidden="true" role="presentation"></div>
+
+    <!-- Mobile: slide-in drawer -->
+    <aside id="mobile-nav-drawer" class="mobile-drawer" aria-label="CV sections" role="navigation">
+        <nav class="mobile-drawer-nav">
+            <a href="#contact" class="cv-nav-link" data-section="contact">Contact</a>
+            <a href="#summary" class="cv-nav-link" data-section="summary">Summary</a>
+            <a href="#experience" class="cv-nav-link" data-section="experience">Experience</a>
+            <a href="#education" class="cv-nav-link" data-section="education">Education</a>
+            <a href="#technologies" class="cv-nav-link" data-section="technologies">Technologies</a>
+            <a href="#languages" class="cv-nav-link" data-section="languages">Languages</a>
+            <a href="#beyond-work" class="cv-nav-link" data-section="beyond-work">Beyond Work</a>
+        </nav>
+    </aside>
+
+    <!-- Right-side section menu (desktop) -->
     <nav id="cv-nav" class="fixed right-0 top-1/2 -translate-y-1/2 z-40 hidden lg:block print:hidden w-40 pr-6 pl-4" aria-label="CV sections">
         <ul class="flex flex-col gap-6 text-sm text-gray-500">
             <li><a href="#contact" class="cv-nav-link block py-2 relative pr-1 transition-colors hover:text-gray-300" data-section="contact">Contact</a></li>
@@ -643,9 +767,9 @@
         }
 
         function setActiveFromScroll() {
-            if (!scrollEl || !nav) return;
+            if (!scrollEl) return;
             const current = getCurrentPageId();
-            nav.querySelectorAll(".cv-nav-link").forEach(function (link) {
+            document.querySelectorAll(".cv-nav-link").forEach(function (link) {
                 link.classList.toggle("active", link.getAttribute("data-section") === current);
             });
             if (location.hash.slice(1) !== current) history.replaceState(null, "", "#" + current);
@@ -659,15 +783,49 @@
             setActiveFromScroll();
         }
 
-        if (nav) {
-            nav.querySelectorAll(".cv-nav-link").forEach(function (link) {
-                link.addEventListener("click", function (e) {
-                    e.preventDefault();
-                    const id = link.getAttribute("data-section");
-                    if (id) scrollToPage(id);
-                });
+        document.querySelectorAll(".cv-nav-link").forEach(function (link) {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                const id = link.getAttribute("data-section");
+                if (id) scrollToPage(id);
+                var drawer = document.getElementById("mobile-nav-drawer");
+                var overlay = document.getElementById("mobile-drawer-overlay");
+                var hamburger = document.getElementById("mobile-nav-hamburger");
+                if (drawer && drawer.classList.contains("mobile-drawer-open")) {
+                    drawer.classList.remove("mobile-drawer-open");
+                    if (overlay) overlay.classList.remove("mobile-drawer-open");
+                    if (hamburger) { hamburger.setAttribute("aria-expanded", "false"); hamburger.setAttribute("aria-label", "Open menu"); }
+                }
             });
-        }
+        });
+
+        // Mobile drawer: open/close
+        (function () {
+            var hamburger = document.getElementById("mobile-nav-hamburger");
+            var overlay = document.getElementById("mobile-drawer-overlay");
+            var drawer = document.getElementById("mobile-nav-drawer");
+            var closeBtn = drawer && drawer.querySelector(".mobile-drawer-close");
+
+            function openDrawer() {
+                if (drawer) drawer.classList.add("mobile-drawer-open");
+                if (overlay) overlay.classList.add("mobile-drawer-open");
+                if (hamburger) { hamburger.setAttribute("aria-expanded", "true"); hamburger.setAttribute("aria-label", "Close menu"); }
+            }
+            function closeDrawer() {
+                if (drawer) drawer.classList.remove("mobile-drawer-open");
+                if (overlay) overlay.classList.remove("mobile-drawer-open");
+                if (hamburger) { hamburger.setAttribute("aria-expanded", "false"); hamburger.setAttribute("aria-label", "Open menu"); }
+            }
+
+            if (hamburger) hamburger.addEventListener("click", function () {
+                if (drawer && drawer.classList.contains("mobile-drawer-open")) closeDrawer(); else openDrawer();
+            });
+            if (overlay) overlay.addEventListener("click", closeDrawer);
+            if (closeBtn) closeBtn.addEventListener("click", closeDrawer);
+            document.addEventListener("keydown", function (e) {
+                if (e.key === "Escape" && drawer && drawer.classList.contains("mobile-drawer-open")) closeDrawer();
+            });
+        })();
 
         if (scrollEl) {
             scrollEl.addEventListener("scroll", setActiveFromScroll, { passive: true });
