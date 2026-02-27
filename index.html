@@ -309,6 +309,15 @@
     pointer-events: auto;
 }
 
+/* Ensure all photos in the side panel share the same visual format */
+#photos-panel img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    aspect-ratio: 3 / 4;
+    border-radius: 0.5rem;
+}
+
 /* Circular scroll: applied via JS for seamless loop (no gap at reset) */
 .photos-panel-strip {
     will-change: transform;
@@ -430,6 +439,7 @@
         max-width: 10rem;
         object-fit: cover;
         border-radius: 0.5rem;
+        aspect-ratio: 3 / 4;
     }
     #photos-panel-mobile [data-mobile-strip] {
         display: none;
