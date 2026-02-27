@@ -45,8 +45,8 @@
             top: 1rem;
             right: 1rem;
             z-index: 50;
-            width: 2.75rem;
-            height: 2.75rem;
+            width: 2.25rem;
+            height: 2.25rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -57,13 +57,34 @@
             transition: background 0.2s, border-color 0.2s;
             -webkit-tap-highlight-color: transparent;
         }
+        /* On mobile/tablet widths, keep the button visually inside the #cv-pages card,
+           even when the card is centered and narrower than the viewport. */
+        @media (max-width: 1023px) {
+            #mobile-nav-hamburger {
+                right: max(1rem, calc(50% - 28rem + 1rem)); /* 28rem = half of max-w-4xl (56rem) */
+            }
+        }
         #mobile-nav-hamburger:hover {
             background: rgb(75 85 99);
             border-color: rgb(107 114 128);
         }
-        #mobile-nav-hamburger svg { width: 1.25rem; height: 1.25rem; }
+        #mobile-nav-hamburger svg { width: 1.05rem; height: 1.05rem; }
         @media (min-width: 1024px) {
             #mobile-nav-hamburger { display: none !important; }
+        }
+
+        /* Extra-small screens (e.g. 320px): slightly smaller + tighter offset */
+        @media (max-width: 360px) {
+            #mobile-nav-hamburger {
+                top: 0.5rem;
+                right: 0.5rem;
+                width: 2rem;
+                height: 2rem;
+            }
+            #mobile-nav-hamburger svg {
+                width: 0.95rem;
+                height: 0.95rem;
+            }
         }
 
         #mobile-drawer-overlay {
