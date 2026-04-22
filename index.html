@@ -3,10 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anđela Topalović</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Anđela Topalović - Product Software Engineer</title>
+    <meta name="description" content="CV of Anđela Topalović — Product Software Engineer based in Belgrade, Serbia. Experience in Node.js, TypeScript, React, and more.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Anđela Topalović — Product Software Engineer">
+    <meta property="og:description" content="Product Software Engineer based in Belgrade, Serbia. Experience in Node.js, TypeScript, React, and more.">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Anđela Topalović — Product Software Engineer">
+    <meta name="twitter:description" content="Product Software Engineer based in Belgrade, Serbia. Experience in Node.js, TypeScript, React, and more.">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="dist/output.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
             line-height: 1.6;
@@ -207,29 +222,28 @@
         .cv-page::-webkit-scrollbar {
             display: none;
         }
-        #page-experience,
-        #page-technologies {
+        #page-experience {
             justify-content: flex-start;
         }
-.cv-page .page-content {
-    max-width: 42rem;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-    font-size: 12px;
-}
-.cv-page .page-content h3 {
-    font-size: 0.875rem;
-    font-weight: 600;
-}
-#page-contact .contact-inner {
-    flex: 0 0 auto;
-    width: 100%;
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
+        .cv-page .page-content {
+            max-width: 42rem;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            font-size: 12px;
+        }
+        .cv-page .page-content h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        #page-contact .contact-inner {
+            flex: 0 0 auto;
+            width: 100%;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
 /* Experience page: more space between positions, same body text size as other pages */
 .experience-page p.text-xs {
@@ -502,8 +516,6 @@
         </ul>
     </nav>
 
-    <div id="beyond-work-cursor" aria-hidden="true"><span id="beyond-work-cursor-text">point the item</span></div>
-
     <div id="cv-wrapper" class="flex relative max-w-6xl mx-auto lg:mr-48 h-screen overflow-hidden">
         <!-- Left column: images (outside #cv-pages), visible only on hover over "Nature and wildlife" -->
         <aside id="photos-panel" class="photos-panel hidden lg:flex flex-col absolute left-0 top-0 bottom-0 w-52 p-5 overflow-hidden bg-gray-900 rounded-l-lg z-10 opacity-0 pointer-events-none transition-opacity duration-200">
@@ -512,15 +524,6 @@
                     <img src="img/Kenya.JPG" alt="Kenya" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" />
                     <img src="img/Kenya2.JPG" alt="Kenya 2" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" />
                     <img src="img/Kenya3.jpeg" alt="Kenya 3" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" />
-                    <img src="img/Kenya.JPG" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/Kenya2.JPG" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/Kenya3.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/Kenya.JPG" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/Kenya2.JPG" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/Kenya3.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/Kenya.JPG" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/Kenya2.JPG" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/Kenya3.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
                 </div>
             </div>
             <div id="photos-strip-dogs" class="absolute inset-0 overflow-hidden hidden" aria-hidden="true">
@@ -528,15 +531,6 @@
                     <img src="img/NinaDjina.jpeg" alt="Nina &amp; Djina" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" />
                     <img src="img/NinaDjina2.jpeg" alt="Nina &amp; Djina 2" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" />
                     <img src="img/NinaDjina3.jpeg" alt="Nina &amp; Djina 3" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" />
-                    <img src="img/NinaDjina.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/NinaDjina2.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/NinaDjina3.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/NinaDjina.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/NinaDjina2.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/NinaDjina3.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/NinaDjina.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/NinaDjina2.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/NinaDjina3.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
                 </div>
             </div>
             <div id="photos-strip-travel" class="absolute inset-0 overflow-hidden hidden" aria-hidden="true">
@@ -544,15 +538,6 @@
                     <img src="img/tso.JPG" alt="Travel, sports and outdoor" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" />
                     <img src="img/tso3.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" />
                     <img src="img/tso2.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" />
-                    <img src="img/tso.JPG" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/tso3.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/tso2.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/tso.JPG" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/tso3.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/tso2.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/tso.JPG" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/tso3.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
-                    <img src="img/tso2.jpeg" alt="" class="w-full rounded-lg object-cover aspect-[3/4] flex-shrink-0" aria-hidden="true" />
                 </div>
             </div>
         </aside>
@@ -735,15 +720,6 @@
                     <img src="img/Kenya.JPG" alt="Kenya" />
                     <img src="img/Kenya2.JPG" alt="Kenya 2" />
                     <img src="img/Kenya3.jpeg" alt="Kenya 3" />
-                    <img src="img/Kenya.JPG" alt="" aria-hidden="true" />
-                    <img src="img/Kenya2.JPG" alt="" aria-hidden="true" />
-                    <img src="img/Kenya3.jpeg" alt="" aria-hidden="true" />
-                    <img src="img/Kenya.JPG" alt="" aria-hidden="true" />
-                    <img src="img/Kenya2.JPG" alt="" aria-hidden="true" />
-                    <img src="img/Kenya3.jpeg" alt="" aria-hidden="true" />
-                    <img src="img/Kenya.JPG" alt="" aria-hidden="true" />
-                    <img src="img/Kenya2.JPG" alt="" aria-hidden="true" />
-                    <img src="img/Kenya3.jpeg" alt="" aria-hidden="true" />
                 </div>
             </div>
             <div data-mobile-strip="photos-strip-dogs" id="photos-mobile-strip-dogs" class="photos-panel-mobile-strip-wrap">
@@ -751,15 +727,6 @@
                     <img src="img/NinaDjina.jpeg" alt="Nina &amp; Djina" />
                     <img src="img/NinaDjina2.jpeg" alt="Nina &amp; Djina 2" />
                     <img src="img/NinaDjina3.jpeg" alt="Nina &amp; Djina 3" />
-                    <img src="img/NinaDjina.jpeg" alt="" aria-hidden="true" />
-                    <img src="img/NinaDjina2.jpeg" alt="" aria-hidden="true" />
-                    <img src="img/NinaDjina3.jpeg" alt="" aria-hidden="true" />
-                    <img src="img/NinaDjina.jpeg" alt="" aria-hidden="true" />
-                    <img src="img/NinaDjina2.jpeg" alt="" aria-hidden="true" />
-                    <img src="img/NinaDjina3.jpeg" alt="" aria-hidden="true" />
-                    <img src="img/NinaDjina.jpeg" alt="" aria-hidden="true" />
-                    <img src="img/NinaDjina2.jpeg" alt="" aria-hidden="true" />
-                    <img src="img/NinaDjina3.jpeg" alt="" aria-hidden="true" />
                 </div>
             </div>
             <div data-mobile-strip="photos-strip-travel" id="photos-mobile-strip-travel" class="photos-panel-mobile-strip-wrap">
@@ -767,15 +734,6 @@
                     <img src="img/tso.JPG" alt="Travel, sports and outdoor" />
                     <img src="img/tso3.jpeg" alt="" />
                     <img src="img/tso2.jpeg" alt="" />
-                    <img src="img/tso.JPG" alt="" aria-hidden="true" />
-                    <img src="img/tso3.jpeg" alt="" aria-hidden="true" />
-                    <img src="img/tso2.jpeg" alt="" aria-hidden="true" />
-                    <img src="img/tso.JPG" alt="" aria-hidden="true" />
-                    <img src="img/tso3.jpeg" alt="" aria-hidden="true" />
-                    <img src="img/tso2.jpeg" alt="" aria-hidden="true" />
-                    <img src="img/tso.JPG" alt="" aria-hidden="true" />
-                    <img src="img/tso3.jpeg" alt="" aria-hidden="true" />
-                    <img src="img/tso2.jpeg" alt="" aria-hidden="true" />
                 </div>
             </div>
         </div>
@@ -790,11 +748,10 @@
     <script>
         // @ts-check
 
-        // Date stamp (static CV convenience)
         /** @type {Intl.DateTimeFormatOptions} */
         const dateFmt = { year: "numeric", month: "long", day: "numeric" };
         var currentDateEl = document.getElementById("currentDate");
-        if (currentDateEl) currentDateEl.textContent = new Date().toLocaleDateString("en-US", dateFmt);
+        if (currentDateEl) currentDateEl.textContent = new Date(document.lastModified).toLocaleDateString("en-US", dateFmt);
 
         // Stacked pages: scroll to section, nav + hash sync
         const PAGE_IDS = ["contact", "summary", "experience", "education", "technologies", "languages", "beyond-work"];
@@ -1150,6 +1107,24 @@
             };
         })();
 
+        // Clone images in each photo strip to fill the container for seamless looping.
+        // HTML only contains the unique images; JS duplicates them 3× with aria-hidden.
+        (function () {
+            var CLONE_COUNT = 3;
+            var strips = document.querySelectorAll(".photos-panel-strip, .photos-panel-mobile-strip");
+            strips.forEach(function (strip) {
+                var originals = Array.prototype.slice.call(strip.children);
+                for (var copy = 0; copy < CLONE_COUNT; copy++) {
+                    originals.forEach(function (img) {
+                        var clone = img.cloneNode(true);
+                        clone.setAttribute("aria-hidden", "true");
+                        clone.setAttribute("alt", "");
+                        strip.appendChild(clone);
+                    });
+                }
+            });
+        })();
+
         // Horizontal strip animation (mobile): pictures move left to right
         (function () {
             var mobileStrips = document.querySelectorAll(".photos-panel-mobile-strip.photos-panel-mobile-strip-animate");
@@ -1318,6 +1293,8 @@
         { label: "MS SQL", group: "recent" },
         { label: "MongoDB", group: "recent" },
         { label: "Git", group: "recent" },
+        { label: "PostgreSQL", group: "recent" },
+        { label: "Python", group: "recent" },
 
         // Used in the past
         { label: "C#", group: "past" },
